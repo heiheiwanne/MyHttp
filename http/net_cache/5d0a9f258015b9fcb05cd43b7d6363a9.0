@@ -1,0 +1,14 @@
+http://capitest.luckincoffee.com/resource/m/user/regionlist?sign=164376678703156373258823610283265201&q=dGM3wgTH3VPsH2nCJlKilcpJht0DMdEuoAH8gaOqHww=&cid=210101
+GET
+0
+HTTP/1.1 200 
+9
+Server: openresty
+Date: Fri, 12 Jul 2019 08:20:29 GMT
+Content-Type: text/html;charset=UTF-8
+Content-Length: 153
+Connection: keep-alive
+Last-Modified: Fri, 12 Jul 2019 08:20:29 GMT
+luck_cache_from: 200
+OkHttp-Sent-Millis: 1562919629613
+OkHttp-Received-Millis: 1562919629694

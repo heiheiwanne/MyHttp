@@ -1,0 +1,128 @@
+apply plugin: 'com.android.library'
+
+apply plugin: 'maven'
+
+
+project.ext.config = [
+        "moduleSettings"         : [
+                "versionName"      : "1.1.0-SNAPSHOT",//修改为相应的版本名 -SNAPSHOT为debug版， 无-SNAPSHOT为release版
+                "versionCode"      : 1, //修改为相应的版本号
+                "compileSdkVersion": 26,
+                "buildToolsVersion": "27.0.3",
+                "minSdkVersion"    : 16,
+                "targetSdkVersion" : 25],
+
+        "mavenRepositorySettings": [
+                "projectRepository" : "http://******/luckyclientlib/",
+                "snapshotRepository": "http://*****/luckyclientlib_snapshot/",
+                "user"              : "***",
+                "password"          : "***"],
+
+        "mavenLibraySettings"    : [
+                "libName"   : "lchttp2",//修改为相应的模块名
+                "artifactId": "lchttp2",//修改为相应的模块名
+                "groupId"   : "com.lucky"]
+]
+
+//refresh ext.config if needed
+setConfigFromExternalParams()
+
+android {
+    compileSdkVersion project.ext.config.moduleSettings.compileSdkVersion
+    buildToolsVersion project.ext.config.moduleSettings.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion project.ext.config.moduleSettings.minSdkVersion
+        targetSdkVersion project.ext.config.moduleSettings.targetSdkVersion
+        if (project.ext.config.moduleSettings.versionName.contains("-SNAPSHOT")) {
+            defaultPublishConfig "debug"
+            println(project.name + ": defaultPublishConfig is debug")
+        } else {
+            defaultPublishConfig "release"
+            println(project.name + ": defaultPublishConfig is release")
+        }
+
+        versionCode project.ext.config.moduleSettings.versionCode
+        versionName project.ext.config.moduleSettings.versionName
+
+        buildConfigField "String", "build_config", "\"" + project.ext.config.toString() + "\""
+//        useLibrary 'org.apache.http.legacy'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    lintOptions {
+        abortOnError false
+    }
+
+}
+
+
+
+dependencies {
+    //fastJson
+    implementation 'com.alibaba:fastjson:1.1.70.android'
+    implementation 'com.android.support:support-annotations:26.0.2'
+    implementation "io.reactivex.rxjava2:rxjava:2.1.17"
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
+    implementation 'com.lucky:utils:1.0.13'
+    implementation 'com.lucky:lib-cache:0.0.3-SNAPSHOT'
+    api "com.lucky:lib-okhttp:0.0.7"
+//    implementation 'com.squareup.okhttp3:okhttp:3.11.0'
+    implementation 'org.bouncycastle:bcprov-jdk16:1.46'
+    testImplementation 'junit:junit:4.12'
+
+//    // https://mvnrepository.com/artifact/commons-logging/commons-logging-api
+//    implementation 'commons-logging:commons-logging-api:1.0.4'
+
+}
+
+repositories {
+    jcenter()
+
+    maven {
+        url project.ext.config.mavenRepositorySettings.projectRepository
+    }
+    maven {
+        url project.ext.config.mavenRepositorySettings.snapshotRepository
+    }
+}
+
+uploadArchives {
+    repositories.mavenDeployer {
+        repository(url: project.ext.config.mavenRepositorySettings.projectRepository) {
+            authentication(userName: project.ext.config.mavenRepositorySettings.user, password: project.ext.config.mavenRepositorySettings.password)
+        }
+
+        snapshotRepository(url: project.ext.config.mavenRepositorySettings.snapshotRepository) {
+            authentication(userName: project.ext.config.mavenRepositorySettings.user, password: project.ext.config.mavenRepositorySettings.password)
+        }
+
+        pom.version = project.ext.config.moduleSettings.versionName
+        pom.artifactId = project.ext.config.mavenLibraySettings.artifactId
+        pom.groupId = project.ext.config.mavenLibraySettings.groupId
+        pom.name = project.ext.config.mavenLibraySettings.libName
+        pom.packaging = 'aar'
+    }
+}
+
+def setConfigFromExternalParams() {
+    def config = project.ext.config
+
+    if (project.hasProperty('V_CODE')) {
+        config.moduleSettings.versionCode = Integer.parseInt(V_CODE)
+    } else {
+    }
+
+    if (project.hasProperty('V_NAME')) {
+        config.moduleSettings.versionName = V_NAME
+    } else {
+    }
+
+    println(project.name + ": ext.config: ")
+    println(new groovy.json.JsonBuilder(config).toPrettyString())
+}

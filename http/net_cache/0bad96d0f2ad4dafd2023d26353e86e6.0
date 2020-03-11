@@ -1,0 +1,18 @@
+http://capitest.luckincoffee.com/resource/m/user/regionlist?sign=1354297174187210463510962765021856853713&q=OGoneCaXN3O6R3_Y5gHZNXmp99WS83EiYCeKQrjv_Eo=&cid=210101
+GET
+1
+Accept-Encoding: gzip
+HTTP/1.1 200 
+12
+Server: openresty
+Date: Thu, 25 Apr 2019 06:58:10 GMT
+Content-Type: text/html;charset=UTF-8
+Transfer-Encoding: chunked
+Connection: keep-alive
+Cache-Control: max-age=30
+Last-Modified: Thu, 25 Apr 2019 06:58:10 GMT
+Content-Encoding: gzip
+Vary: Accept-Encoding
+luck_cache_from: 200
+OkHttp-Sent-Millis: 1556175490428
+OkHttp-Received-Millis: 1556175490498
