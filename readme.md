@@ -1,6 +1,6 @@
 coffee通用网络库：
 ##### 使用方式：
-注：真正的网络库代码在http lib下，使用方式也可以看 [ClientTest](./http/test/com/lucky/lib/http2/net/client/ClientTest)
+注：真正的网络库代码在http lib下，使用方式也可以看 [ClientTest](./http/src/test/java/com/lucky/lib/http2/net/client/ClientTest.java)
 ```
  mHttpClient.get()
                 .url(regionlist)
